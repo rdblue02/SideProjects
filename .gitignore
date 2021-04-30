@@ -1,0 +1,4 @@
+# Exclude Artifacts
+bin
+obj
+vs
