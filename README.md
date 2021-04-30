@@ -1,2 +1,3 @@
-# BrickBreaker
-A fun side project
+# Side Projects
+
+
