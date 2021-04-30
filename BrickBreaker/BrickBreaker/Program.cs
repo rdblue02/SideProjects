@@ -6,7 +6,8 @@ namespace BrickBreaker
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var curentGame = new CurrentGame();
+            curentGame.Run();
         }
     }
 }
