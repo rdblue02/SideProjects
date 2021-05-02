@@ -8,23 +8,28 @@ namespace ConsoleGameFrameWork
 {
     public static class DrawEngine
     {
-        static Dictionary<Point, Pixel> screenBuffer; 
-        static Dictionary<Point, Pixel> screen;  
+        static Dictionary<Point, int> pointIndexLookUp;
+        static List<Pixel> screenBuffer; 
+        static List<Pixel> screen;  
         public static void InitializeScreen()
         {
-            screenBuffer = new Dictionary<Point, Pixel>();
-            screen = new Dictionary<Point, Pixel>();
+            screenBuffer = new List<Pixel>();
+            screen = new List<Pixel>();
+            pointIndexLookUp = new Dictionary<Point, int>();
 
             var screenWidth = Game.CurrentSettings.WindowWidth;
             var screenHeight = Game.CurrentSettings.WindowHeight;
+            var index = 0;
 
             for(int x=0;x<screenWidth;x++)
             {
                 for (int y = 0; y < screenHeight; y++)
                 {
                     var pixel = Pixel.Reset(x, y);
-                    screen.Add(pixel.Point,pixel);
-                    screenBuffer.Add(pixel.Point, pixel);
+                    pointIndexLookUp.Add(pixel.Point, index);
+                    screen.Add(pixel);
+                    screenBuffer.Add(pixel);
+                    index++;
                 }
             }
         }
@@ -37,59 +42,55 @@ namespace ConsoleGameFrameWork
             foreach(var pixel in sprite.DrawMap)
             {
                 //If two sprites overlap, we use the ZIndex to decide which pixel to draw.
-                if(pixel.ZIndex > screenBuffer[pixel.Point].ZIndex)
+                if (pixel.ZIndex > screenBuffer[pointIndexLookUp[pixel.Point]].ZIndex)
                 {
-                    screenBuffer[pixel.Point] = pixel; 
+                    screenBuffer[pointIndexLookUp[pixel.Point]] = pixel; 
                 }
             }
         }
        
        public static void DrawScreen()
-       {     
-            foreach(var point in screenBuffer.Keys)
+       {    
+            for(int i = 0; i < screenBuffer.Count; i++)
             {
                 //Dont bother drawing pixels that haven't changed.
-                if (!screenBuffer[point].Equals(screen[point]))
+                if (!screenBuffer[i].Equals(screen[i]))
                 {
                     //No buffer exists to keep the scroll bar from displaying.
                     //Make sure we don't throw an out of range exception.
-                    if(point.X<Console.BufferWidth  && 
-                       point.X > -1 &&
-                       point.Y<Console.BufferHeight  && 
-                       point.Y>-1
+                    if (screenBuffer[i].Point.X < Console.BufferWidth &&
+                       screenBuffer[i].Point.X > -1 &&
+                       screenBuffer[i].Point.Y < Console.BufferHeight &&
+                       screenBuffer[i].Point.Y > -1
                        )
                     {
                         //Swallow the IO exception that happens when a user resizes the screen at the 
                         //same time we are writing.
                         try
                         {
-                            Console.SetCursorPosition(point.X, point.Y);
-                            Console.BackgroundColor = screenBuffer[point].Color;
-                            Console.ForegroundColor = screenBuffer[point].FontColor;
-                            Console.Write(screenBuffer[point].Fill);
-                            screen[point] = screenBuffer[point];
+                            Console.SetCursorPosition(screenBuffer[i].Point.X, screenBuffer[i].Point.Y);
+                            Console.BackgroundColor = screenBuffer[i].Color;
+                            Console.ForegroundColor = screenBuffer[i].FontColor;
+                            Console.Write(screenBuffer[i].Fill);
+                            screen[i] = screenBuffer[i];
                         }
-                        finally 
+                        finally
                         {
 
                         }
-                       
+
                     }
-                               
                 }
-               
             }
-            Console.BackgroundColor = Game.CurrentSettings.BackgroundColor;
-            Console.ForegroundColor = Game.CurrentSettings.BackgroundColor;
             FlushScreenBuffer();
         }
 
         static void FlushScreenBuffer()
         {
-            foreach (var point in screenBuffer.Keys)
+            for(int i = 0; i < screenBuffer.Count; i++)
             {
-                screenBuffer[point] = Pixel.Reset(point);
-            }
+                screenBuffer[i]= Pixel.Reset(screenBuffer[i].Point);
+            }     
         }
     }
 }

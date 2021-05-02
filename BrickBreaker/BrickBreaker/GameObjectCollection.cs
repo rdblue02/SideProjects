@@ -14,6 +14,7 @@ namespace BrickBreaker
     public static class GameObjectCollection
     {
         //we don't want to let people update the list from outside this class.
+        //todo look into using a "lookup" object instead.
         public static IList<GameObject> Collection => collection.AsReadOnly();
         public static List<string> ActivePowerUps { get; } = new List<string>();
        
