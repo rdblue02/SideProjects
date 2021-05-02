@@ -22,7 +22,7 @@ namespace BrickBreaker
 
         GameState currentState = GameState.Starting;
         TimeSpan timeSinceLastRandomPowerUp = TimeSpan.FromSeconds(0);
-        TimeSpan waitTimeForRandomPowerUp = TimeSpan.FromSeconds(2);
+        TimeSpan waitTimeForRandomPowerUp = TimeSpan.FromSeconds(20);
 
         Dictionary<GameState, string> stateMessageMap = new Dictionary<GameState, string>() {
             { GameState.Starting, MessageConstants.Begin},
