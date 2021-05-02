@@ -144,7 +144,6 @@ namespace BrickBreaker
         {   
             if(CommandManager.IsKeyUp(Keys.Space))
             {
-                Level = 1;
                 Initialize();
                 this.currentState = GameState.Active;                              
             }
