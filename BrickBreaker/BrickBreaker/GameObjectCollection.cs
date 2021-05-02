@@ -38,7 +38,7 @@ namespace BrickBreaker
         /// <param name="gameObject"></param>
         public static void Inject(GameObject gameObject)
         {
-            if (!collection.Contains(gameObject))
+            if (gameObject != null &&!collection.Contains(gameObject))
             {
                 gameObjectsQueue.Enqueue(gameObject);
             }

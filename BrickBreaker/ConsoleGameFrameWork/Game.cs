@@ -12,7 +12,6 @@ namespace ConsoleGameFrameWork
         public abstract void Draw(GameTime gameTime);
 
         public static event EventHandler<WindowResizedEvent> OnWindowResize;
-        public static event EventHandler<PauseEvent> onPauseKeyPressed;
         public static Settings CurrentSettings { get; private set; } = Settings.GetDefaultSettings();
         protected bool IsPaused { get; set; }
         public bool IsRunning { get; private set; }

@@ -210,16 +210,23 @@ namespace BrickBreaker
             var availAblePowerUps = PowerUpEffectMap[typeof(T)].Where(x => x.MinLevelRequired <= CurrentGame.Level && 
                                                                 !GameObjectCollection.ActivePowerUps.Contains(x.Name))
                                                                 .ToList();
-            var powerUpEffect = availAblePowerUps[CurrentGame.Randomizer.RandomNumber(0, availAblePowerUps.Count)];
-
-            var powerUp = new PowerUp<T>()
+            if (availAblePowerUps.Any())
             {
-                IsActive = true,
-                Speed = 2
-            };
-            powerUp.PowerUpEffects.Add(powerUpEffect);
-            powerUp.Sprite.DrawMap.Add(new Pixel() { Fill = ' ', Color = powerUp.EffectColor, FontColor = powerUp.EffectColor, Point = new Point(x, y), ZIndex = 1 });
-            return powerUp;
+                var powerUpEffect = availAblePowerUps[CurrentGame.Randomizer.RandomNumber(0, availAblePowerUps.Count)];
+
+                var powerUp = new PowerUp<T>()
+                {
+                    IsActive = true,
+                    Speed = 2
+                };
+                powerUp.PowerUpEffects.Add(powerUpEffect);
+                powerUp.Sprite.DrawMap.Add(new Pixel() { Fill = ' ', Color = powerUp.EffectColor, FontColor = powerUp.EffectColor, Point = new Point(x, y), ZIndex = 1 });
+                return powerUp;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //Initialize all of the available Power Ups

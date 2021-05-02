@@ -22,7 +22,7 @@ namespace BrickBreaker
 
         GameState currentState = GameState.Starting;
         TimeSpan timeSinceLastRandomPowerUp = TimeSpan.FromSeconds(0);
-        TimeSpan waitTimeForRandomPowerUp = TimeSpan.FromSeconds(20);
+        TimeSpan waitTimeForRandomPowerUp = TimeSpan.FromSeconds(2);
 
         Dictionary<GameState, string> stateMessageMap = new Dictionary<GameState, string>() {
             { GameState.Starting, MessageConstants.Begin},
@@ -123,7 +123,10 @@ namespace BrickBreaker
                 }
                 else
                 {
-                    var power = GameObjectInitializer.GetRandomPowerUp(CurrentGame.CurrentSettings.WindowWidth / 2, CurrentGame.CurrentSettings.WindowHeight / 2 - 5);
+                    var xMin = CurrentSettings.WindowWidth / 4;
+                    var xMax = CurrentSettings.WindowWidth - CurrentSettings.WindowWidth / 4;
+                    var y = CurrentSettings.WindowHeight / 3;
+                    var power = GameObjectInitializer.GetRandomPowerUp(Randomizer.RandomNumber(xMin,xMax),y);
                     GameObjectCollection.Inject(power);
                     timeSinceLastRandomPowerUp = gameTime.TotalElapsedTime;
                 } 

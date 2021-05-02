@@ -49,10 +49,9 @@ namespace ConsoleGameFrameWork
             }
             //Todo we should decide which errors are okay.
             //Put a limit on how many times we try to apply.
-            catch
+            catch(Exception e)
             {
-                if (!this.SettingsAppliedSuccessfully)
-                    Apply();
+                Console.Write(e.Message);
             }           
         }
        
@@ -60,8 +59,8 @@ namespace ConsoleGameFrameWork
         {
             return new Settings()
             {
-                WindowHeight = 30,
-                WindowWidth = 130,
+                WindowHeight = 25,
+                WindowWidth = 93,
                 BackgroundColor = ConsoleColor.Cyan,
                 AllowResize = false,
                 DisplayFps = false,

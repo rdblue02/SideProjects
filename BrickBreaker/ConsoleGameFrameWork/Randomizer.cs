@@ -45,7 +45,20 @@ namespace ConsoleGameFrameWork
         /// <param name="to"></param>
         /// <returns></returns>
         public int RandomNumber(int from, int to)
-        {
+        {          
+            if (from == to)
+            {
+                return from;
+            }
+            //we don't care which direction the user is expecting
+            //from and to. We only care about the numbers inbetween.
+            if (from > to)
+            {
+                var temp = to;
+                to = from;
+                from = temp;
+            }         
+
             return random.Next(from, to);
         }
         /// <summary>
