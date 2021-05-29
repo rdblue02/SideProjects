@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DotaBot": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "token": "ODQwOTg0OTE3MDE4Mjc5OTg2.YJgKPA.nrzcNXZe7i0gy89qh9C2q7P4zkA"
+      }
+    }
+  }
+}

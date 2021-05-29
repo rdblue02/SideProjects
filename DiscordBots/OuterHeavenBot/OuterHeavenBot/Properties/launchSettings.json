@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OuterHeavenBot": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "token": "ODQzNDY3NDAxOTQ0MTA0OTkw.YKESOw.J5m35mq5oUrtMKeBHIV6nisNOOI"
+      }
+    }
+  }
+}
